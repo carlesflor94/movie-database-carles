@@ -6,5 +6,5 @@ export type Movie = {
   genres: string[];
   description: string;
   rating: number;
-  voteCount: number;
+  userRating?: number;
 };
