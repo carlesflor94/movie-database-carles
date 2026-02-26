@@ -1,25 +1,25 @@
 const BASE_URL = "https://api.themoviedb.org/3";
+const ACCESS_TOKEN = process.env.TMDB_ACCESS_TOKEN!;
 
-const ACCESS_TOKEN = process.env.TMDB_ACCESS_TOKEN;
+async function tmdbFetch(endpoint: string) {
+  const res = await fetch(`${BASE_URL}${endpoint}`, {
+    headers: {
+      Authorization: `Bearer ${ACCESS_TOKEN}`,
+      "Content-Type": "application/json",
+    },
+  });
 
-if (!ACCESS_TOKEN) {
-  throw new Error("Access token not found");
+  if (!res.ok) throw new Error("TMDB request failed");
+
+  return res.json();
+}
+
+export async function getGenres() {
+  return tmdbFetch("/genre/movie/list");
 }
 
 export async function searchMovies(query: string, page: number = 1) {
-  const response = await fetch(
-    `${BASE_URL}/search/movie?query=${encodeURIComponent(query)}&page=${page}`,
-    {
-      headers: {
-        Authorization: `Bearer ${ACCESS_TOKEN}`,
-        "Content-Type": "application/json",
-      },
-    },
+  return tmdbFetch(
+    `/search/movie?query=${encodeURIComponent(query)}&page=${page}`,
   );
-
-  if (!response.ok) {
-    throw new Error("Error while fetching movies");
-  }
-
-  return response.json();
 }
