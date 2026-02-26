@@ -6,7 +6,7 @@ type Props = {
   onRate: (id: string, rating: number) => void;
 };
 
-export default function MovieGid({ movies, onRate }: Props) {
+export default function MovieGrid({ movies, onRate }: Props) {
   return (
     <div className="movies-container">
       {movies.slice(0, 6).map((movie) => (
