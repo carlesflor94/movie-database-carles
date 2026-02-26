@@ -9,7 +9,7 @@ async function tmdbFetch(endpoint: string) {
     },
   });
 
-  if (!res.ok) throw new Error("TMDB request failed");
+  if (!res.ok) throw new Error("TMDB token failed");
 
   return res.json();
 }

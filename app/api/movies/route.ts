@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { searchMovies } from "@/services/tmdb";
+import { searchMovies, getGenres } from "@/services/tmdb";
+import { Movie } from "@/types/movie";
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
@@ -7,17 +8,35 @@ export async function GET(request: NextRequest) {
   const page = Number(searchParams.get("page") || "1");
 
   if (!query) {
-    return NextResponse.json({ error: "Query is required" }, { status: 400 });
+    return NextResponse.json({ error: "Query required" }, { status: 400 });
   }
 
   try {
-    const data = await searchMovies(query, page);
+    const [moviesData, genresData] = await Promise.all([
+      searchMovies(query, page),
+      getGenres(),
+    ]);
 
-    return NextResponse.json(data);
+    const genreMap = new Map(genresData.genres.map((g: any) => [g.id, g.name]));
+
+    const formatted: Movie[] = moviesData.results.map((movie: any) => ({
+      id: String(movie.id),
+      title: movie.title,
+      releaseDate: movie.release_date,
+      poster: movie.poster_path
+        ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+        : undefined,
+      genres: movie.genre_ids.map((id: number) => genreMap.get(id) || ""),
+      description: movie.overview,
+      rating: movie.vote_average,
+      voteCount: movie.vote_count,
+    }));
+
+    return NextResponse.json({
+      results: formatted,
+      totalPages: moviesData.total_pages,
+    });
   } catch (error) {
-    return NextResponse.json(
-      { error: "Failed to fetch movies" },
-      { status: 500 },
-    );
+    return NextResponse.json({ error: "Movies not found" }, { status: 500 });
   }
 }
