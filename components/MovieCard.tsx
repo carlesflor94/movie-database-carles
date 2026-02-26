@@ -4,7 +4,7 @@ type Props = {
   movie: Movie;
 };
 
-export default function Movies({ movie }: Props) {
+export default function MovieCard({ movie }: Props) {
   return (
     <div className="movie-container">
       {movie.poster && <img src={movie.poster} alt={movie.title} />}
