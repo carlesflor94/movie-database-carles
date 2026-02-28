@@ -4,6 +4,7 @@ import { useState } from "react";
 import MovieGrid from "@/components/MovieGrid";
 import SearchBar from "@/components/SearchBar";
 import { Movie } from "@/types/movie";
+import styles from "./page.module.css";
 
 export default function Home() {
   const [movies, setMovies] = useState<Movie[]>([]);
@@ -17,7 +18,7 @@ export default function Home() {
   };
 
   return (
-    <main className="container">
+    <main className={styles.container}>
       <SearchBar value={query} onChange={setQuery} onSearch={handleSearch} />
       <MovieGrid movies={movies} />
     </main>
