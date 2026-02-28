@@ -19,23 +19,29 @@ export default function MovieCard({ movie, onRate }: Props) {
   };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.posterWrapper}>
-        {movie.poster && (
-          <img src={movie.poster} alt={movie.title} className={styles.poster} />
-        )}
-      </div>
-
-      <div className={styles.movieContent}>
-        <div className={styles.header}>
-          <h2 className={styles.title}>{movie.title}</h2>
-          <p className={styles.rating}>{movie.rating}</p>
+    <div className={styles.card}>
+      <div className={styles.container}>
+        <div className={styles.posterWrapper}>
+          {movie.poster && (
+            <img
+              src={movie.poster}
+              alt={movie.title}
+              className={styles.poster}
+            />
+          )}
         </div>
-        <p className={styles.date}>{movie.releaseDate}</p>
-        <p className={styles.genres}>{movie.genres.join(", ")}</p>
-        <p className={styles.description}>{movie.description}</p>
-        <div className={styles.userRating}>
-          <Rate count={10} value={userRating} onChange={handleChange} />
+
+        <div className={styles.movieContent}>
+          <div className={styles.header}>
+            <h2 className={styles.title}>{movie.title}</h2>
+            <p className={styles.rating}>{movie.rating}</p>
+          </div>
+          <p className={styles.date}>{movie.releaseDate}</p>
+          <p className={styles.genres}>{movie.genres.join(", ")}</p>
+          <p className={styles.description}>{movie.description}</p>
+          <div className={styles.userRating}>
+            <Rate count={10} value={userRating} onChange={handleChange} />
+          </div>
         </div>
       </div>
     </div>
