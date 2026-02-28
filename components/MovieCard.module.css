@@ -1,0 +1,30 @@
+.container {
+  display: flex;
+  width: 100%;
+  gap: 20px;
+  padding: 32px 0;
+  box-sizing: border-box;
+}
+
+.posterWrapper {
+  width: 40%;
+  flex-shrink: 0;
+}
+
+.poster {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.movieContent {
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
