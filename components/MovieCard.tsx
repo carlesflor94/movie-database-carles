@@ -1,4 +1,5 @@
 import { Movie } from "@/types/movie";
+import styles from "./MovieCard.module.css";
 
 type Props = {
   movie: Movie;
@@ -6,15 +7,23 @@ type Props = {
 
 export default function MovieCard({ movie }: Props) {
   return (
-    <div className="movie-container">
-      {movie.poster && <img src={movie.poster} alt={movie.title} />}
-      <div className="movie-wrapper-title">
-        <h2 className="movie-title">{movie.title}</h2>
-        <p className="movie-tmdb-rating">{movie.rating}</p>
+    <div className={styles.container}>
+      <div className={styles.posterWrapper}>
+        {movie.poster && (
+          <img src={movie.poster} alt={movie.title} className={styles.poster} />
+        )}
       </div>
-      <p className="movie-date">{movie.releaseDate}</p>
-      <p className="movie-genres">{movie.genres.join(", ")}</p>
-      <p className="movie-description">{movie.description}</p>
+
+      <div className={styles.movieContent}>
+        <div className={styles.header}>
+          <h2 className={styles.title}>{movie.title}</h2>
+          <p className={styles.rating}>{movie.rating}</p>
+        </div>
+        <p className={styles.date}>{movie.releaseDate}</p>
+        <p className={styles.genres}>{movie.genres.join(", ")}</p>
+        <p className={styles.description}>{movie.description}</p>
+        <p className={styles.userRating}>Your rating</p>
+      </div>
     </div>
   );
 }
