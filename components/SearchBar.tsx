@@ -1,3 +1,5 @@
+import styles from "./SearchBar.module.css";
+
 type SearchBarProps = {
   value: string;
   onChange: (value: string) => void;
@@ -15,11 +17,11 @@ export default function SearchBar({
     }
   };
   return (
-    <div className="search-container">
+    <div className={styles.container}>
       <input
         type="text"
         placeholder="Type to search..."
-        className="search-input"
+        className={styles.input}
         value={value}
         onChange={(e) => onChange(e.target.value)}
         onKeyDown={handleKeyDown}
