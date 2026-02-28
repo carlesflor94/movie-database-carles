@@ -34,7 +34,9 @@ export default function MovieCard({ movie, onRate }: Props) {
         <div className={styles.movieContent}>
           <div className={styles.header}>
             <h2 className={styles.title}>{movie.title}</h2>
-            <p className={styles.rating}>{movie.rating}</p>
+            <p className={styles.rating}>
+              {movie.rating ? movie.rating.toFixed(1) : "-"}
+            </p>
           </div>
           <p className={styles.date}>{movie.releaseDate}</p>
           <p className={styles.genres}>{movie.genres.join(", ")}</p>

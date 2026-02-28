@@ -4,6 +4,17 @@
   box-shadow:
     1px 2px 4px rgba(0, 0, 0, 0.04),
     3px 8px 24px rgba(0, 0, 0, 0.18);
+  cursor: pointer;
+  transition:
+    box-shadow 0.4s ease,
+    transform 0.4s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px) scale(1.01);
+  box-shadow:
+    1px 2px 4px rgba(0, 0, 0, 0.04),
+    3px 8px 24px rgba(0, 0, 0, 0.18);
 }
 
 .container {
