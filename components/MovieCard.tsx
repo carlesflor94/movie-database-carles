@@ -2,7 +2,7 @@
 
 import { Movie } from "@/types/movie";
 import styles from "./MovieCard.module.css";
-import { Rate } from "antd";
+import { Rate, Tag } from "antd";
 import { useState } from "react";
 import { dateFormat } from "@/app/utils/dateFormat";
 
@@ -40,7 +40,11 @@ export default function MovieCard({ movie, onRate }: Props) {
             </p>
           </div>
           <p className={styles.date}>{dateFormat(movie.releaseDate)}</p>
-          <p className={styles.genres}>{movie.genres.join(", ")}</p>
+          <div className={styles.genres}>
+            {movie.genres.map((genre) => (
+              <Tag key={genre}>{genre}</Tag>
+            ))}
+          </div>
           <p className={styles.description}>{movie.description}</p>
           <div className={styles.userRating}>
             <Rate count={10} value={userRating} onChange={handleChange} />

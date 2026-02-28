@@ -48,7 +48,29 @@
   align-items: flex-start;
 }
 
+.title {
+  font-size: 20px;
+  padding: 10px 0;
+}
+
+.rating {
+  padding: 10px;
+  margin-right: 9px;
+  border-radius: 50%;
+  border: 2px solid #e9d100;
+}
+
+.date {
+  color: #827e7e;
+}
+
+.genres {
+  display: flex;
+  gap: 10px;
+}
+
 .description {
+  padding-top: 10px;
   overflow: hidden;
   line-height: 1.5;
   max-height: calc(1.5em * 6);
