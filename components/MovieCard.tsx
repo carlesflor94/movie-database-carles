@@ -4,6 +4,7 @@ import { Movie } from "@/types/movie";
 import styles from "./MovieCard.module.css";
 import { Rate } from "antd";
 import { useState } from "react";
+import { dateFormat } from "@/app/utils/dateFormat";
 
 type Props = {
   movie: Movie;
@@ -38,7 +39,7 @@ export default function MovieCard({ movie, onRate }: Props) {
               {movie.rating ? movie.rating.toFixed(1) : "-"}
             </p>
           </div>
-          <p className={styles.date}>{movie.releaseDate}</p>
+          <p className={styles.date}>{dateFormat(movie.releaseDate)}</p>
           <p className={styles.genres}>{movie.genres.join(", ")}</p>
           <p className={styles.description}>{movie.description}</p>
           <div className={styles.userRating}>
