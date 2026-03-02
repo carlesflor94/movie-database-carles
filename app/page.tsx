@@ -51,7 +51,7 @@ export default function Home() {
 
       const data = await res.json();
       setMovies(data.results);
-      setPageResults(data.total_pages);
+      setPageResults(data.total_results);
       setPage(pageNumber);
     } catch (err) {
       setError("Error while fetching movie data");

@@ -34,7 +34,7 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json({
       results: formatted,
-      totalPages: moviesData.total_pages,
+      totalPages: moviesData.total_results,
     });
   } catch (error) {
     return NextResponse.json({ error: "Movies not found" }, { status: 500 });
