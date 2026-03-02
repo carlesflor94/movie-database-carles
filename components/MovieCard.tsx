@@ -23,13 +23,11 @@ export default function MovieCard({ movie, onRate }: Props) {
     <div className={styles.card}>
       <div className={styles.container}>
         <div className={styles.posterWrapper}>
-          {movie.poster && (
-            <img
-              src={movie.poster}
-              alt={movie.title}
-              className={styles.poster}
-            />
-          )}
+          <img
+            src={movie.poster || "/poster-default.png"}
+            alt={movie.title}
+            className={styles.poster}
+          />
         </div>
 
         <div className={styles.movieContent}>

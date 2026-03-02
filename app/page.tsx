@@ -99,7 +99,7 @@ export default function Home() {
               className={styles.pagination}
               current={page}
               total={pageResults}
-              pageSize={6}
+              pageSize={20}
               onChange={handlePageChange}
               showSizeChanger={false}
             />
