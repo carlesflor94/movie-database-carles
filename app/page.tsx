@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Tabs } from "antd";
+import { Tabs, Pagination } from "antd";
 import MovieGrid from "@/components/MovieGrid";
 import SearchBar from "@/components/SearchBar";
 import { Movie } from "@/types/movie";
@@ -11,34 +11,27 @@ export default function Home() {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [query, setQuery] = useState("");
   const [activeTab, setActiveTab] = useState("search");
+  const [page, setPage] = useState(1);
+  const [pageResults, setPageResults] = useState(0);
 
-  const handleSearch = async () => {
+  const handleSearch = async (pageNumber = 1) => {
     if (!query.trim()) return;
-    const res = await fetch(`/api/movies?query=${encodeURIComponent(query)}`);
+    const res = await fetch(
+      `/api/movies?query=${encodeURIComponent(query)}&page=${pageNumber}`,
+    );
     const data = await res.json();
     setMovies(data.results);
+    setPageResults(data.total_results);
+    setPage(pageNumber);
+  };
+
+  const handlePageChange = (pageNumber: number) => {
+    handleSearch(pageNumber);
   };
 
   const tabItems = [
-    {
-      key: "search",
-      label: "Search",
-      children: (
-        <>
-          <SearchBar
-            value={query}
-            onChange={setQuery}
-            onSearch={handleSearch}
-          />
-          <MovieGrid movies={movies} />
-        </>
-      ),
-    },
-    {
-      key: "rated",
-      label: "Rated",
-      children: <div>Rated movies by User</div>,
-    },
+    { key: "search", label: "Search" },
+    { key: "rated", label: "Rated" },
   ];
 
   return (
@@ -49,6 +42,24 @@ export default function Home() {
         onChange={(key) => setActiveTab(key)}
         items={tabItems}
       />
+      {activeTab === "search" && (
+        <>
+          <SearchBar
+            value={query}
+            onChange={setQuery}
+            onSearch={handleSearch}
+          />
+          <MovieGrid movies={movies} />
+          <Pagination
+            className={styles.pagination}
+            current={page}
+            total={pageResults}
+            pageSize={5}
+            onChange={handlePageChange}
+            showSizeChanger={false}
+          />
+        </>
+      )}
     </main>
   );
 }
