@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Tabs, Pagination, Spin, Alert } from "antd";
+import { Tabs, Pagination, Spin, Alert, Empty } from "antd";
 import MovieGrid from "@/components/MovieGrid";
 import SearchBar from "@/components/SearchBar";
 import { Movie } from "@/types/movie";
@@ -88,7 +88,11 @@ export default function Home() {
             <Alert message="Error" description={error} type="error" showIcon />
           )}
           <Spin spinning={loading}>
-            <MovieGrid movies={movies} />
+            {movies.length === 0 && !loading && !error && query ? (
+              <Empty description="Movie not found" />
+            ) : (
+              <MovieGrid movies={movies} />
+            )}
           </Spin>
           {movies.length > 0 && !loading && !error && (
             <Pagination
