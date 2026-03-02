@@ -42,7 +42,7 @@ export default function Home() {
 
     try {
       const res = await fetch(
-        `/api/movies?query=${encodeURIComponent(query)}&page=${pageNumber}`,
+        `/api/movies?query=${encodeURIComponent(searchQuery)}&page=${pageNumber}`,
       );
 
       if (!res.ok) {
@@ -61,7 +61,7 @@ export default function Home() {
   };
 
   const handlePageChange = (pageNumber: number) => {
-    handleSearch(pageNumber);
+    handleSearch(query, pageNumber);
   };
 
   const tabItems = [
