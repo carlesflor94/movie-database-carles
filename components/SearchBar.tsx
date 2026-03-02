@@ -1,9 +1,10 @@
 import styles from "./SearchBar.module.css";
+import { debounce } from "@/app/utils/debounce";
 
 type SearchBarProps = {
   value: string;
   onChange: (value: string) => void;
-  onSearch: () => void;
+  onSearch: (value: string) => void;
 };
 
 export default function SearchBar({
@@ -11,11 +12,12 @@ export default function SearchBar({
   onChange,
   onSearch,
 }: SearchBarProps) {
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      onSearch();
-    }
+  const debouncedSearch = debounce(onSearch, 500);
+  const handleChange = (value: string) => {
+    onChange(value);
+    debouncedSearch(value);
   };
+
   return (
     <div className={styles.container}>
       <input
@@ -23,8 +25,7 @@ export default function SearchBar({
         placeholder="Type to search..."
         className={styles.input}
         value={value}
-        onChange={(e) => onChange(e.target.value)}
-        onKeyDown={handleKeyDown}
+        onChange={(e) => handleChange(e.target.value)}
       />
     </div>
   );

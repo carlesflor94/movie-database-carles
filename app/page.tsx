@@ -30,8 +30,8 @@ export default function Home() {
     };
   }, []);
 
-  const handleSearch = async (pageNumber = 1) => {
-    if (!query.trim()) return;
+  const handleSearch = async (searchQuery: string, pageNumber = 1) => {
+    if (!searchQuery.trim()) return;
     if (!navigator.onLine) {
       setError("Please check the internet connection");
       return;
