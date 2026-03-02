@@ -5,17 +5,21 @@ import { Tabs, Pagination, Spin, Alert, Empty } from "antd";
 import MovieGrid from "@/components/MovieGrid";
 import SearchBar from "@/components/SearchBar";
 import { Movie } from "@/types/movie";
+import { useRouter, usePathname } from "next/navigation";
 import styles from "./page.module.css";
 
 export default function Home() {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [query, setQuery] = useState("");
-  const [activeTab, setActiveTab] = useState("search");
   const [page, setPage] = useState(1);
   const [pageResults, setPageResults] = useState(0);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [offline, setOffline] = useState(!navigator.onLine);
+
+  const router = useRouter();
+  const pathname = usePathname();
+  const activeTab = pathname.includes("/rated") ? "rated" : "search";
 
   useEffect(() => {
     const handleOnline = () => setOffline(false);
@@ -74,9 +78,12 @@ export default function Home() {
       <Tabs
         centered
         activeKey={activeTab}
-        onChange={(key) => setActiveTab(key)}
+        onChange={(key) => {
+          if (key === "rated") router.push("/rated");
+        }}
         items={tabItems}
       />
+
       {activeTab === "search" && (
         <>
           <SearchBar
