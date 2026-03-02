@@ -32,7 +32,7 @@ export default function Home() {
 
       const data = await res.json();
       setMovies(data.results);
-      setPageResults(data.total_results);
+      setPageResults(data.total_pages);
       setPage(pageNumber);
     } catch (err) {
       setError("Error while fetching movie data");
@@ -71,14 +71,16 @@ export default function Home() {
           <Spin spinning={loading}>
             <MovieGrid movies={movies} />
           </Spin>
-          <Pagination
-            className={styles.pagination}
-            current={page}
-            total={pageResults}
-            pageSize={6}
-            onChange={handlePageChange}
-            showSizeChanger={false}
-          />
+          {movies.length > 0 && !loading && !error && (
+            <Pagination
+              className={styles.pagination}
+              current={page}
+              total={pageResults}
+              pageSize={6}
+              onChange={handlePageChange}
+              showSizeChanger={false}
+            />
+          )}
         </>
       )}
     </main>
