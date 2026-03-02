@@ -1,5 +1,7 @@
 .card {
-  height: auto;
+  width: 100%;
+  max-width: 454px;
+  height: 281px;
   background: #fff;
   border: 1px solid rgba(0, 0, 0, 0.06);
   box-shadow:
@@ -20,15 +22,13 @@
 
 .container {
   display: grid;
-  grid-template-columns: 2fr 3fr;
-  width: 100%;
-  height: auto;
+  grid-template-columns: 183px 1fr;
+  height: 100%;
   gap: 20px;
-  box-sizing: border-box;
-  align-items: stretch;
 }
 
 .posterWrapper {
+  width: 100%;
   height: 100%;
 }
 
@@ -36,7 +36,6 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  display: block;
 }
 
 .movieContent {
@@ -76,7 +75,7 @@
   padding-top: 10px;
   overflow: hidden;
   line-height: 1.4;
-  max-height: calc(1.5em * 6);
+  max-height: calc(1.5em * 3);
   position: relative;
 }
 
@@ -84,42 +83,6 @@
   margin-top: auto;
 }
 
-@media (max-width: 768px) {
-  .container {
-    grid-template-columns: 90px 1fr auto;
-    grid-template-rows: auto auto auto;
-    grid-template-areas:
-      "poster info rating"
-      "description description description"
-      "userRating userRating userRating";
-    gap: 0px;
-  }
-
-  .posterWrapper {
-    grid-area: poster;
-    height: 91px;
-  }
-
-  .header,
-  .genres,
-  .date {
-    grid-area: info;
-    padding-left: 13px;
-  }
-
-  .rating {
-    grid-area: rating;
-  }
-
-  .description {
-    grid-area: description;
-    line-height: 1.3;
-    max-height: calc(1.5em * 3);
-  }
-
-  .userRating {
-    grid-area: userRating;
-    display: flex;
-    justify-content: flex-end;
-  }
+.userRating :global(.ant-rate) {
+  font-size: 16px;
 }
