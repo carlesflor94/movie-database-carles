@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Tabs, Pagination, Spin, Alert } from "antd";
 import MovieGrid from "@/components/MovieGrid";
 import SearchBar from "@/components/SearchBar";
@@ -15,9 +15,28 @@ export default function Home() {
   const [pageResults, setPageResults] = useState(0);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [offline, setOffline] = useState(!navigator.onLine);
+
+  useEffect(() => {
+    const handleOnline = () => setOffline(false);
+    const handleOffline = () => setOffline(true);
+
+    window.addEventListener("online", handleOnline);
+    window.addEventListener("offline", handleOffline);
+
+    return () => {
+      window.removeEventListener("online", handleOnline);
+      window.removeEventListener("offline", handleOffline);
+    };
+  }, []);
 
   const handleSearch = async (pageNumber = 1) => {
     if (!query.trim()) return;
+    if (!navigator.onLine) {
+      setError("Please check the internet connection");
+      return;
+    }
+
     setLoading(true);
     setError(null);
 
