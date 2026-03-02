@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { searchMovies, getGenres } from "@/services/tmdb";
-import { Movie } from "@/types/movie";
+import { normalizeData } from "@/app/utils/normalizeData";
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
@@ -17,20 +17,7 @@ export async function GET(request: NextRequest) {
       getGenres(),
     ]);
 
-    const genreMap = new Map(genresData.genres.map((g: any) => [g.id, g.name]));
-
-    const formatted: Movie[] = moviesData.results.map((movie: any) => ({
-      id: String(movie.id),
-      title: movie.title,
-      releaseDate: movie.release_date,
-      poster: movie.poster_path
-        ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-        : undefined,
-      genres: movie.genre_ids.map((id: number) => genreMap.get(id) || ""),
-      description: movie.overview,
-      rating: movie.vote_average,
-      voteCount: movie.vote_count,
-    }));
+    const formatted = normalizeData(moviesData.results, genresData);
 
     return NextResponse.json({
       results: formatted,
