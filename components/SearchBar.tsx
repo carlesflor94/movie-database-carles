@@ -1,5 +1,6 @@
 import styles from "./SearchBar.module.css";
-import { debounce } from "@/app/utils/debounce";
+import { debounce } from "lodash";
+import { useMemo } from "react";
 
 type SearchBarProps = {
   value: string;
@@ -12,7 +13,7 @@ export default function SearchBar({
   onChange,
   onSearch,
 }: SearchBarProps) {
-  const debouncedSearch = debounce(onSearch, 500);
+  const debouncedSearch = useMemo(() => debounce(onSearch, 500), [onSearch]);
   const handleChange = (value: string) => {
     onChange(value);
     debouncedSearch(value);
