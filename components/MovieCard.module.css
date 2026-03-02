@@ -87,10 +87,7 @@
 
 .description {
   padding-top: 10px;
-  overflow: hidden;
   line-height: 1.4;
-  max-height: calc(1.5em * 3);
-  position: relative;
 }
 
 .userRating {

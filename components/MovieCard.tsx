@@ -5,6 +5,7 @@ import styles from "./MovieCard.module.css";
 import { Rate, Tag } from "antd";
 import { useState } from "react";
 import { dateFormat } from "@/app/utils/dateFormat";
+import { truncateDescription } from "@/app/utils/truncateDescription";
 
 type Props = {
   movie: Movie;
@@ -43,7 +44,9 @@ export default function MovieCard({ movie, onRate }: Props) {
               <Tag key={genre}>{genre}</Tag>
             ))}
           </div>
-          <p className={styles.description}>{movie.description}</p>
+          <p className={styles.description}>
+            {truncateDescription(movie.description, 80)}
+          </p>
           <div className={styles.userRating}>
             <Rate count={10} value={userRating} onChange={handleChange} />
           </div>
