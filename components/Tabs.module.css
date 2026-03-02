@@ -1,0 +1,15 @@
+.container {
+  display: flex;
+  justify-content: center;
+  gap: 16.16px;
+  padding-bottom: 20px;
+}
+
+.tab {
+  cursor: pointer;
+}
+
+.active {
+  color: #1890ff;
+  border-bottom: 2px solid #1890ff;
+}

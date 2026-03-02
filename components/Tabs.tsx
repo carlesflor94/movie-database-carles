@@ -9,13 +9,13 @@ export default function Tabs({ activeTab, onChange }: TabsProps) {
   return (
     <div className={styles.container}>
       <button
-        className={activeTab === "search" ? "tab active" : "tab"}
+        className={`${styles.tab} ${activeTab === "search" ? styles.active : ""}`}
         onClick={() => onChange("search")}
       >
         Search
       </button>
       <button
-        className={activeTab === "rated" ? "tab active" : "tab"}
+        className={`${styles.tab} ${activeTab === "rated" ? styles.active : ""}`}
         onClick={() => onChange("rated")}
       >
         Rated
