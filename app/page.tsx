@@ -6,6 +6,7 @@ import MovieGrid from "@/components/MovieGrid";
 import SearchBar from "@/components/SearchBar";
 import { Movie } from "@/types/movie";
 import { useRouter, usePathname } from "next/navigation";
+import { createGuestSession } from "@/services/guestSession";
 import styles from "./page.module.css";
 
 export default function Home() {
@@ -16,6 +17,7 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [offline, setOffline] = useState(!navigator.onLine);
+  const [guestSession, setGuestSession] = useState<string | null>(null);
 
   const router = useRouter();
   const pathname = usePathname();
@@ -32,6 +34,20 @@ export default function Home() {
       window.removeEventListener("online", handleOnline);
       window.removeEventListener("offline", handleOffline);
     };
+  }, []);
+
+  useEffect(() => {
+    async function logIn() {
+      try {
+        const res = await fetch("/api/guest-session");
+        if (!res.ok) throw new Error("Failed to fetch guest session");
+        const data = await res.json();
+        setGuestSession(data.guestSessionId);
+      } catch (err) {
+        console.error("Failed to login", err);
+      }
+    }
+    logIn();
   }, []);
 
   const handleSearch = async (searchQuery: string, pageNumber = 1) => {
