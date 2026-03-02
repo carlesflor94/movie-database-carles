@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Tabs, Pagination } from "antd";
+import { Tabs, Pagination, Spin } from "antd";
 import MovieGrid from "@/components/MovieGrid";
 import SearchBar from "@/components/SearchBar";
 import { Movie } from "@/types/movie";
@@ -13,9 +13,11 @@ export default function Home() {
   const [activeTab, setActiveTab] = useState("search");
   const [page, setPage] = useState(1);
   const [pageResults, setPageResults] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   const handleSearch = async (pageNumber = 1) => {
     if (!query.trim()) return;
+    setLoading(true);
     const res = await fetch(
       `/api/movies?query=${encodeURIComponent(query)}&page=${pageNumber}`,
     );
@@ -23,6 +25,7 @@ export default function Home() {
     setMovies(data.results);
     setPageResults(data.total_results);
     setPage(pageNumber);
+    setLoading(false);
   };
 
   const handlePageChange = (pageNumber: number) => {
@@ -49,7 +52,9 @@ export default function Home() {
             onChange={setQuery}
             onSearch={handleSearch}
           />
-          <MovieGrid movies={movies} />
+          <Spin spinning={loading}>
+            <MovieGrid movies={movies} />
+          </Spin>
           <Pagination
             className={styles.pagination}
             current={page}
