@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Tabs, Pagination, Spin } from "antd";
+import { Tabs, Pagination, Spin, Alert } from "antd";
 import MovieGrid from "@/components/MovieGrid";
 import SearchBar from "@/components/SearchBar";
 import { Movie } from "@/types/movie";
@@ -14,18 +14,31 @@ export default function Home() {
   const [page, setPage] = useState(1);
   const [pageResults, setPageResults] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleSearch = async (pageNumber = 1) => {
     if (!query.trim()) return;
     setLoading(true);
-    const res = await fetch(
-      `/api/movies?query=${encodeURIComponent(query)}&page=${pageNumber}`,
-    );
-    const data = await res.json();
-    setMovies(data.results);
-    setPageResults(data.total_results);
-    setPage(pageNumber);
-    setLoading(false);
+    setError(null);
+
+    try {
+      const res = await fetch(
+        `/api/movies?query=${encodeURIComponent(query)}&page=${pageNumber}`,
+      );
+
+      if (!res.ok) {
+        throw new Error("Movies not found");
+      }
+
+      const data = await res.json();
+      setMovies(data.results);
+      setPageResults(data.total_results);
+      setPage(pageNumber);
+    } catch (err) {
+      setError("Error while fetching movie data");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handlePageChange = (pageNumber: number) => {
@@ -52,6 +65,9 @@ export default function Home() {
             onChange={setQuery}
             onSearch={handleSearch}
           />
+          {error && (
+            <Alert message="Error" description={error} type="error" showIcon />
+          )}
           <Spin spinning={loading}>
             <MovieGrid movies={movies} />
           </Spin>
