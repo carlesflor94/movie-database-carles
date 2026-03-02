@@ -25,14 +25,16 @@
   height: auto;
   gap: 20px;
   box-sizing: border-box;
+  align-items: stretch;
 }
 
 .posterWrapper {
-  height: auto;
+  height: 100%;
 }
 
 .poster {
-  height: auto;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   display: block;
 }
@@ -76,6 +78,10 @@
   line-height: 1.4;
   max-height: calc(1.5em * 6);
   position: relative;
+}
+
+.userRating {
+  margin-top: auto;
 }
 
 @media (max-width: 768px) {
