@@ -87,13 +87,16 @@ export default function Home() {
           {error && (
             <Alert message="Error" description={error} type="error" showIcon />
           )}
-          <Spin spinning={loading}>
-            {movies.length === 0 && !loading && !error && query ? (
-              <Empty description="Movie not found" />
-            ) : (
-              <MovieGrid movies={movies} />
-            )}
-          </Spin>
+          {loading ? (
+            <div className={styles.spinner}>
+              <Spin size="large" />
+            </div>
+          ) : movies.length === 0 && !loading && !error && query ? (
+            <Empty description="Movie not found" />
+          ) : (
+            <MovieGrid movies={movies} />
+          )}
+
           {movies.length > 0 && !loading && !error && (
             <Pagination
               className={styles.pagination}
