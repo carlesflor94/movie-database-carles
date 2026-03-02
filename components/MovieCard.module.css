@@ -46,20 +46,34 @@
 
 .header {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
+  width: 250px;
+  padding: 10px 0;
 }
 
 .title {
   font-size: 20px;
-  padding: 10px 0;
+  line-height: 1.2;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* MAX 2 LINES */
+  -webkit-box-orient: vertical;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-height: calc(1.4em * 2);
 }
 
 .rating {
-  padding: 10px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
   margin-right: 9px;
   border-radius: 50%;
   border: 2px solid #e9d100;
+  width: 40px;
+  height: 40px;
 }
 
 .date {

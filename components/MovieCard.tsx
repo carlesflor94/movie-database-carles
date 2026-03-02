@@ -39,7 +39,7 @@ export default function MovieCard({ movie, onRate }: Props) {
           </div>
           <p className={styles.date}>{dateFormat(movie.releaseDate)}</p>
           <div className={styles.genres}>
-            {movie.genres.map((genre) => (
+            {movie.genres.slice(0, 3).map((genre) => (
               <Tag key={genre}>{genre}</Tag>
             ))}
           </div>
