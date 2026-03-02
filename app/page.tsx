@@ -54,7 +54,7 @@ export default function Home() {
             className={styles.pagination}
             current={page}
             total={pageResults}
-            pageSize={5}
+            pageSize={6}
             onChange={handlePageChange}
             showSizeChanger={false}
           />
