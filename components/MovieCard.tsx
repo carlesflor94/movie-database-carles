@@ -6,6 +6,7 @@ import { Rate, Tag } from "antd";
 import { useState } from "react";
 import { dateFormat } from "@/app/utils/dateFormat";
 import { truncateDescription } from "@/app/utils/truncateDescription";
+import { ratingScale } from "@/app/utils/ratingScale";
 
 type Props = {
   movie: Movie;
@@ -19,6 +20,8 @@ export default function MovieCard({ movie, onRate }: Props) {
     setUserRating(value);
     onRate?.(movie.id, value);
   };
+
+  const ratingColor = movie.rating ? ratingScale(movie.rating) : undefined;
 
   return (
     <div className={styles.card}>
@@ -34,7 +37,10 @@ export default function MovieCard({ movie, onRate }: Props) {
         <div className={styles.movieContent}>
           <div className={styles.header}>
             <h2 className={styles.title}>{movie.title}</h2>
-            <p className={styles.rating}>
+            <p
+              className={styles.rating}
+              style={{ borderColor: ratingColor, color: ratingColor }}
+            >
               {movie.rating ? movie.rating.toFixed(1) : "-"}
             </p>
           </div>
