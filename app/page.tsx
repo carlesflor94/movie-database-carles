@@ -38,12 +38,19 @@ export default function Home() {
 
   useEffect(() => {
     async function logIn() {
-      if (guestSession) return;
       try {
+        const storedSession = localStorage.getItem("guestSessionId");
+
+        if (storedSession) {
+          setGuestSession(storedSession);
+          return;
+        }
+
         const res = await fetch("/api/movies/guest-session");
         if (!res.ok) throw new Error("Failed to fetch guest session");
         const data = await res.json();
         setGuestSession(data.guestSessionId);
+        localStorage.setItem("guestSessionId", data.guestSessionId);
       } catch (err) {
         console.error("Failed to login", err);
       }

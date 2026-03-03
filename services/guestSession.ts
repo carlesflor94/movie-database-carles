@@ -18,3 +18,9 @@ export async function rateMovie(
     },
   );
 }
+
+export async function getRatedMovies(guestSessionId: string, page = 1) {
+  return tmdbFetch(
+    `/guest_session/${guestSessionId}/rated/movies?page=${page}`,
+  );
+}
