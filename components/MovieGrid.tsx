@@ -4,7 +4,7 @@ import styles from "./MovieGrid.module.css";
 
 type Props = {
   movies: Movie[];
-  onRate: (id: string, rating: number) => void;
+  onRate?: (id: string, rating: number) => void;
 };
 
 export default function MovieGrid({ movies, onRate }: Props) {

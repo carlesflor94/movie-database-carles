@@ -24,6 +24,7 @@ export default function Home() {
   const activeTab = pathname.includes("/rated") ? "rated" : "search";
 
   useEffect(() => {
+    setOffline(!navigator.onLine);
     const handleOnline = () => setOffline(false);
     const handleOffline = () => setOffline(true);
 
@@ -56,7 +57,7 @@ export default function Home() {
       }
     }
     logIn();
-  }, [guestSession]);
+  }, []);
 
   const handleSearch = async (searchQuery: string, pageNumber = 1) => {
     if (!searchQuery.trim()) return;

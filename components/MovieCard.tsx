@@ -9,7 +9,7 @@ import { truncateDescription } from "@/app/utils/truncateDescription";
 
 type Props = {
   movie: Movie;
-  onRate: (id: string, rating: number) => void;
+  onRate?: (id: string, rating: number) => void;
 };
 
 export default function MovieCard({ movie, onRate }: Props) {
@@ -17,7 +17,7 @@ export default function MovieCard({ movie, onRate }: Props) {
 
   const handleChange = (value: number) => {
     setUserRating(value);
-    onRate(movie.id, value);
+    onRate?.(movie.id, value);
   };
 
   return (
