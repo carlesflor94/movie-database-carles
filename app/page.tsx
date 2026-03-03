@@ -93,15 +93,15 @@ export default function Home() {
     handleSearch(query, pageNumber);
   };
 
-  const handleRate = async (movieId: string, rating: number) => {
-    if (!guestSession) return;
+  async function handleRate(movieId: string, rating: number) {
+    const guestSessionId = localStorage.getItem("guestSessionId");
 
-    try {
-      await rateMovie(movieId, guestSession, rating);
-    } catch (error) {
-      console.error("Failed white rating the movie", error);
-    }
-  };
+    await fetch("api/movies/rate", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ movieId, rating, guestSessionId }),
+    });
+  }
 
   const tabItems = [
     { key: "search", label: "Search" },
