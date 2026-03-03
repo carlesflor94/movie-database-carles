@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getRatedMovies } from "@/services/guestSession";
+import { getGenres } from "@/services/tmdb";
+import { normalizeData } from "@/app/utils/normalizeData";
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
@@ -14,8 +16,10 @@ export async function GET(request: NextRequest) {
 
   try {
     const data = await getRatedMovies(guestSessionId);
+    const genres = await getGenres();
+    const movies = normalizeData(data.results, genres);
     return NextResponse.json({
-      results: data.results,
+      results: movies,
       total_results: data.total_results,
     });
   } catch (error) {
