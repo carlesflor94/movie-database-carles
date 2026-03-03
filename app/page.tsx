@@ -6,7 +6,7 @@ import MovieGrid from "@/components/MovieGrid";
 import SearchBar from "@/components/SearchBar";
 import { Movie } from "@/types/movie";
 import { useRouter, usePathname } from "next/navigation";
-import { createGuestSession } from "@/services/guestSession";
+import { rateMovie } from "@/services/guestSession";
 import styles from "./page.module.css";
 
 export default function Home() {
@@ -85,6 +85,16 @@ export default function Home() {
     handleSearch(query, pageNumber);
   };
 
+  const handleRate = async (movieId: string, rating: number) => {
+    if (!guestSession) return;
+
+    try {
+      await rateMovie(movieId, guestSession, rating);
+    } catch (error) {
+      console.error("Failed white rating the movie", error);
+    }
+  };
+
   const tabItems = [
     { key: "search", label: "Search" },
     { key: "rated", label: "Rated" },
@@ -118,7 +128,7 @@ export default function Home() {
           ) : movies.length === 0 && !loading && !error && query ? (
             <Empty description="Movie not found" />
           ) : (
-            <MovieGrid movies={movies} />
+            <MovieGrid movies={movies} onRate={handleRate} />
           )}
 
           {movies.length > 0 && !loading && !error && (

@@ -13,7 +13,7 @@ type Props = {
 };
 
 export default function MovieCard({ movie, onRate }: Props) {
-  const [userRating, setUserRating] = useState<number>(0);
+  const [userRating, setUserRating] = useState<number>(movie.userRating || 0);
 
   const handleChange = (value: number) => {
     setUserRating(value);
