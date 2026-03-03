@@ -17,5 +17,6 @@ export function normalizeData(
     description: movie.overview,
     rating: movie.vote_average,
     voteCount: movie.vote_count,
+    userRating: movie.rating || 0,
   }));
 }
