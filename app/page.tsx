@@ -38,6 +38,7 @@ export default function Home() {
 
   useEffect(() => {
     async function logIn() {
+      if (guestSession) return;
       try {
         const res = await fetch("/api/movies/guest-session");
         if (!res.ok) throw new Error("Failed to fetch guest session");
@@ -48,7 +49,7 @@ export default function Home() {
       }
     }
     logIn();
-  }, []);
+  }, [guestSession]);
 
   const handleSearch = async (searchQuery: string, pageNumber = 1) => {
     if (!searchQuery.trim()) return;
