@@ -39,7 +39,7 @@ export default function Home() {
   useEffect(() => {
     async function logIn() {
       try {
-        const res = await fetch("/api/guest-session");
+        const res = await fetch("/api/movies/guest-session");
         if (!res.ok) throw new Error("Failed to fetch guest session");
         const data = await res.json();
         setGuestSession(data.guestSessionId);
