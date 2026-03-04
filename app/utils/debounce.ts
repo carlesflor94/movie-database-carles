@@ -1,18 +1,30 @@
-export const debounce = <T extends (...args: any[]) => void>(
+type DebouncedFunction<T extends (...args: any[]) => void> = ((
+  ...args: Parameters<T>
+) => void) & {
+  cancel: () => void;
+};
+
+export function debounce<T extends (...args: any[]) => void>(
   fn: T,
   debounceTime = 0,
-) => {
-  let delayTime: ReturnType<typeof setTimeout>;
+): DebouncedFunction<T> {
+  let timer: ReturnType<typeof setTimeout>;
 
-  return function (this: unknown, ...args: Parameters<T>) {
-    const context = this;
-
-    if (delayTime) {
-      clearTimeout(delayTime);
+  const debounced = ((...args: Parameters<T>) => {
+    if (timer) {
+      clearTimeout(timer);
     }
 
-    delayTime = setTimeout(() => {
-      fn.apply(context, args);
+    timer = setTimeout(() => {
+      fn(...args);
     }, debounceTime);
+  }) as DebouncedFunction<T>;
+
+  debounced.cancel = () => {
+    if (timer) {
+      clearTimeout(timer);
+    }
   };
-};
+
+  return debounced;
+}
