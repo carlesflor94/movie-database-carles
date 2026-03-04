@@ -12,12 +12,9 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    const [moviesData, genresData] = await Promise.all([
-      searchMovies(query, page),
-      getGenres(),
-    ]);
+    const moviesData = await searchMovies(query, page);
 
-    const formatted = normalizeData(moviesData.results, genresData);
+    const formatted = normalizeData(moviesData.results);
 
     return NextResponse.json({
       results: formatted,
