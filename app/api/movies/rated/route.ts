@@ -16,8 +16,7 @@ export async function GET(request: NextRequest) {
 
   try {
     const data = await getRatedMovies(guestSessionId);
-    const genres = await getGenres();
-    const movies = normalizeData(data.results, genres);
+    const movies = normalizeData(data.results);
     return NextResponse.json({
       results: movies,
       total_results: data.total_results,
