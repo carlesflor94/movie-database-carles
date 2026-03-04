@@ -7,6 +7,7 @@ import { useState } from "react";
 import { dateFormat } from "@/app/utils/dateFormat";
 import { truncateDescription } from "@/app/utils/truncateDescription";
 import { ratingScale } from "@/app/utils/ratingScale";
+import { useGenres } from "@/context/GenreContext";
 
 type Props = {
   movie: Movie;
@@ -22,6 +23,8 @@ export default function MovieCard({ movie, onRate }: Props) {
   };
 
   const ratingColor = movie.rating ? ratingScale(movie.rating) : undefined;
+
+  const { getGenreName } = useGenres();
 
   return (
     <div className={styles.card}>
@@ -46,8 +49,8 @@ export default function MovieCard({ movie, onRate }: Props) {
           </div>
           <p className={styles.date}>{dateFormat(movie.releaseDate)}</p>
           <div className={styles.genres}>
-            {movie.genres?.slice(0, 3).map((genre) => (
-              <Tag key={genre}>{genre}</Tag>
+            {movie.genresIds?.slice(0, 3).map((id) => (
+              <Tag key={id}>{getGenreName(id)}</Tag>
             ))}
           </div>
           <p className={styles.description}>

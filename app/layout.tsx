@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { GenreProvider } from "@/context/GenreContext";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import "antd/dist/reset.css";
@@ -28,7 +29,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <GenreProvider>{children}</GenreProvider>
       </body>
     </html>
   );
