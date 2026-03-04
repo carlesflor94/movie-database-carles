@@ -1,6 +1,6 @@
 import styles from "./SearchBar.module.css";
-import debounce from "lodash/debounce";
-import { useEffect, useMemo } from "react";
+import { debounce } from "lodash";
+import { useMemo } from "react";
 
 type SearchBarProps = {
   value: string;
@@ -18,12 +18,6 @@ export default function SearchBar({
     onChange(value);
     debouncedSearch(value);
   };
-
-  useEffect(() => {
-    return () => {
-      debouncedSearch.cancel();
-    };
-  }, [debouncedSearch]);
 
   return (
     <div className={styles.container}>
